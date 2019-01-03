@@ -4,33 +4,27 @@ import json
 with open('db/text.json', 'r') as texta:
     databasa = json.load(texta)
 
+print('                             ДОБРО ПОЖАЛОВАТЬ!                         ')
+print('    Информационный терминал на основе функционального программирования PYTHON')
+print('--------------------------------------------------------------------------------')
+
 # Сохраняет данные в базе
 def keep():
     with open('db/text.json', 'w') as text:
         close = json.dump(databasa, text)
 
-# Приветствие при открытии программы
-def hello_hello():
-    print('                  = ДОБРО ПОЖАЛОВАТЬ! =                        ')
-    print('Информационный терминал на основе функционального программирования PYTHON')
-    print('--------------------------------------------------------------------------')
-
 # Сообщение для выбора операции
 def please_choise():
-    print('Для осуществления операции выберите ее номер')
-    print('1 - внести новую запись')
-    print('2 - откорректировать запись')
-    print('3 - удалить запись')
-    print('4 - получить отчет')
-    print('0 - для выхода и закрытия приложения')
+    print(
+        'Для осуществления операции выберите ее номер' + '\n' + '\n' + '1 - внести новую запись' + '\n' + '\n' +
+        '2 - откорректировать запись' + '\n' + '\n' + '3 - удалить запись' + '\n' + '\n' + '4 - получить отчет' +
+        '\n' + '\n' + '0 - для выхода и закрытия приложения' + '\n')
 
 # Сообщение для выбора услуги
 def please_choise_servis():
-    print('Введите 1 - газоснабжение')
-    print('Введите 2 - электроэнергия')
-    print('Введите 3 - домашний телефон')
-    print('Введите 4 - коммунальные услуги')
-    print('Введите 5 - интернет')
+    print('Введите 1 - газоснабжение' + '\n' + '\n' + 'Введите 2 - электроэнергия' + '\n' + '\n'
+          + 'Введите 3 - домашний телефон' + '\n' + '\n' + 'Введите 4 - коммунальные услуги' + '\n' + '\n'
+          + 'Введите 5 - интернет')
 
 # Сообщение об отсутствии информации в базе
 def no_info():
@@ -40,18 +34,10 @@ def no_info():
 def clean_console():
     print('\n'*40)
 
-# Назначение постоянных значений для услуг
-gas = 1
-energy = 2
-hphone = 3
-house_pay = 4
-internet = 5
-
-
-hello_hello()
 please_choise()
 choice = int(input('Сделайте свой выбор: '))
 
+# Основной цикл программы после, при прирывании которого крограмма закрывается.
 while choice != 0:
     closse = 1
 
@@ -70,47 +56,11 @@ while choice != 0:
             databasa.append(maskad)
             keep()
 
-    # Изменяет значения услуги 'газ'
-    def gas_korrect(data, new_info):
+    # Корректирует данные за определенный период
+    def korrect(data, new_info,num):
         for i in range(len(databasa)):
             if databasa[i][0] == data:
-                databasa[i][1][0][1] = new_info
-                break
-        if databasa[i][0] != data:
-            no_info()
-
-    # Изменяет значения услуги 'энергия'
-    def energy_korrect(data, new_info):
-        for i in range(len(databasa)):
-            if databasa[i][0] == data:
-                databasa[i][1][1][1] = new_info
-                break
-        if databasa[i][0] != data:
-            no_info()
-
-    # Изменяет значения услуги 'домашний телефон'
-    def hphone_korrect(data, new_info):
-        for i in range(len(databasa)):
-            if databasa[i][0] == data:
-                databasa[i][1][2][1] = new_info
-                break
-        if databasa[i][0] != data:
-            no_info()
-
-    # Изменяет значения услуги 'коммунальные услуги'
-    def house_pay_korrect(data, new_info):
-        for i in range(len(databasa)):
-            if databasa[i][0] == data:
-                databasa[i][1][3][1] = new_info
-                break
-        if databasa[i][0] != data:
-            no_info()
-
-    # Изменяет значения услуги 'интернет'
-    def internet_korrect(data, new_info):
-        for i in range(len(databasa)):
-            if databasa[i][0] == data:
-                databasa[i][1][4][1] = new_info
+                databasa[i][1][num][1] = new_info
                 break
         if databasa[i][0] != data:
             no_info()
@@ -132,7 +82,6 @@ while choice != 0:
                 betta = databasa[i][1][num]
                 print(betta)
                 databasa[i][1][num][1] = 0
-                keep()
 
     # Выводит все данные базы в удобном для чтения формате
     def pokaz():
@@ -188,42 +137,37 @@ while choice != 0:
             else:print('Вы ввели недопустимый формат ( допустимый: 1 - 12)')
             closse = input('Нажмите любую квлавишу, чтобы повторить или 0 для выхода')
 
-
-
     if choice == 2:
         clean_console()
         print('Выберете период за который необходимо произвести корректировку')
         m_ounth = int(input('Введите месяц: '))
         y_ear = int(input('Введите год: '))
-        da_ta = str(m_ounth) + '_' + str(y_ear)
-        print(da_ta)
+        data = str(m_ounth) + '_' + str(y_ear)
 
         def ret():
             for i in range(len(databasa)):
-                if databasa[i][0] == da_ta:
-                    print(databasa[i][0])
+                if databasa[i][0] == data:
                     break
             return i
 
-        if databasa[ret()][0] == da_ta:
+        if databasa[ret()][0] == data:
             print('Какие данные следует откореектировать?')
             please_choise_servis()
             name_korrekt = str(input('Следайте свой выбор: '))
+            def new_into():
+                new_zn = str(input('Введите новое значение: '))
+                return new_zn
             if name_korrekt == '1':
-                new_zn = str(input('Введите новое значение: '))
-                gas_korrect(da_ta, new_zn)
+                korrect(data, new_into(),0)
             if name_korrekt == '2':
-                new_zn = str(input('Введите новое значение: '))
-                energy_korrect(da_ta, new_zn)
+                korrect(data, new_into(),1)
             if name_korrekt == '3':
-                new_zn = str(input('Введите новое значение: '))
-                hphone_korrect(da_ta, new_zn)
+                korrect(data, new_into(),2)
             if name_korrekt == '4':
-                new_zn = str(input('Введите новое значение: '))
-                house_pay_korrect(da_ta, new_zn)
+                korrect(data, new_into(),3)
             if name_korrekt == '5':
-                new_zn = str(input('Введите новое значение: '))
-                internet_korrect(da_ta, new_zn)
+                korrect(data, new_into(),4)
+            keep()
         else:
             print('По данному периоду нет данных')
             print('Хотите ли создать запись о данном периоде?')
@@ -266,15 +210,14 @@ while choice != 0:
                         delete(data, 3)
                     if name_delete == 5:
                         delete(data, 4)
+                    keep()
 
         else:
             print('Записи по данной дате нет')
 
-
     if choice == 4:
         clean_console()
         pokaz()
-
 
     input('Для продолжения нажмите любую клавишу')
     clean_console()
